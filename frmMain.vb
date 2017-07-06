@@ -8,22 +8,12 @@ Public Class frmMain
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         MessageBox.Show("Enter the formula weight, select a volume, and select a concentration.", "Mass for Molar Solution Calculator")
-        gbQuestions.Visible = False
     End Sub
-    Private Sub chkTry_CheckedChanged(sender As Object, e As EventArgs) Handles chkTry.CheckedChanged
-        If chkTry.Checked Then
-            gbQuestions.Visible = True
-        Else
-            gbQuestions.Visible = False
-        End If
-    End Sub
+
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
         txtWeight.Clear()
         lblMass.ResetText()
         cbConc.Text = "Pick a concentration"
-        gbQuestions.Visible = False
-        chkTry.Checked = False
-        lstQuestions.Items.Clear()
 
         If rbLiter.Checked Then
             rbLiter.Checked = False
@@ -118,103 +108,9 @@ Public Class frmMain
         MessageBox.Show(strDetails)
     End Sub
 
-    Private Sub btnQuestion_Click(sender As Object, e As EventArgs) Handles btnQuestion.Click
-        Dim dblConc As Double = 0
-        Dim dblVol As Double = 0
-        Dim dblWeight As Double = 0
-        Dim dblMass As Double = 0
-        Dim dblUserAnswer As Double = 0.0
-        Dim strQuestion As String = ""
-        If Double.TryParse(txtWeight.Text, dblWeight) = 0 Then
-            MessageBox.Show("Please enter the formula weight.", "Input Error")
-        End If
-
-        Const intTOTAL_QUESTIONS As Integer = 1
-        Dim intQuestionNo As Integer = 1
-        For intQuestionNo = 1 To intTOTAL_QUESTIONS
-            If Double.TryParse(txtWeight.Text, dblWeight) = 0 Then
-                MessageBox.Show("Please enter the formula weight.", "Input Error")
-            End If
-
-            If Double.TryParse(txtWeight.Text, dblWeight) Then
-                Select Case cbConc.SelectedIndex
-
-                    Case 0
-                        rbLiter.Checked = 1
-                        dblVol = 1
-
-                    Case 1
-                        rbMiliter.Checked = 0.001
-                        dblVol = 0.001
-
-                    Case 2
-                        rbMiliter.Checked = 0.000001
-                        dblVol = 0.000001
-
-                    Case Else
-                        MessageBox.Show("Please select a volume", "Input error")
-                        rbLiter.Focus()
-                End Select
-            End If
-
-            If cbConc.SelectedIndex = 0 Then
-                dblConc = 1
-            ElseIf cbConc.SelectedIndex = 1 Then
-                dblConc = 0.001
-            ElseIf cbConc.SelectedIndex = 2 Then
-                dblConc = 0.00001
-            ElseIf cbConc.SelectedIndex = 3 Then
-                dblConc = 0.000001
-            ElseIf cbConc.SelectedIndex = 4 Then
-                dblConc = 0.0000000000001
-            ElseIf cbConc.SelectedIndex = 5 Then
-                dblConc = 0.00000000000001
-            Else
-                MessageBox.Show("Please select a concentration", "Input error")
-                txtWeight.Focus()
-            End If
-
-            strQuestion += dblConc.ToString() + " * " + dblVol.ToString() + " * " + dblWeight.ToString() + " = "
-
-            dblConc = dblConc * dblVol
-            dblMass = dblConc * dblWeight
-            lblMass.Text = dblMass.ToString("")
-            dblUserAnswer = CDbl(InputBox(strQuestion, "Answer Needed"))
-
-            lstQuestions.Items.Add(strQuestion + dblUserAnswer.ToString())
-        Next
-        Dim dblAnswerKey As Double = dblMass
-        Select Case cbConc.SelectedIndex
-
-            Case 0
-                rbLiter.Checked = 1
-                dblVol = 1
-
-            Case 1
-                rbMiliter.Checked = 0.001
-                dblVol = 0.001
-
-            Case 2
-                rbMiliter.Checked = 0.000001
-                dblVol = 0.000001
-
-            Case Else
-                MessageBox.Show("Please select a volume", "Input error")
-                rbLiter.Focus()
-        End Select
-
-        strQuestion += " * " + dblConc.ToString() + " * " + dblVol.ToString() + " * " + dblWeight.ToString()
-        lstQuestions.Items.Add(strQuestion + dblUserAnswer.ToString())
-        If dblUserAnswer = dblAnswerKey Then
-            MessageBox.Show("You answered it correctly! Great job!", "You are doing great!")
-        Else
-            MessageBox.Show("Lets keep practing! You are almost there!", "Try Again")
-        End If
-
-    End Sub
 
     Private Sub btnHelp_Click(sender As Object, e As EventArgs) Handles btnHelp.Click
-        MessageBox.Show("This calculator allows you to discover the mass molarity of a compound which requires a concentration and volume. Scientists practice this equation in order to make solution.
+        MessageBox.Show("This calculator allows you to discover the mass molarity of a compound which requires a concentration and volume. Scientists practice this equation in order to make solutions.
 Formula weight is the sum of the atomic weights of every atom in a given empirical formula.
 Molar concentration is the total amount of a solute present in one unit of a solution. Molar concentration is also known as molarity. 
 The mass is important to know because it is the amount of matter present in a substance. Mass is different from weight, since it is not affected by gravity that makes the value constant.
@@ -234,7 +130,4 @@ Mass (g) = Concentration (mol/L) * Volume (L) * Formular Weight (g/mol)
         End If
     End Sub
 
-    Private Sub picBeaker_Click(sender As Object, e As EventArgs) Handles picBeaker.Click
-
-    End Sub
 End Class
